@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Core Networking Classes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Reset & Core Layout Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Header / Navigation Bar Styles --- */
+        .main-header {
+            background-color: #1a252f;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .logo .logo-text span {
+            color: #ef4444;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu ul li {
+            margin-left: 20px;
+        }
+
+        .nav-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu ul li a:hover, .nav-menu ul li a.active {
+            color: #3498db;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* --- Main Content Portal Splitscreen Wrapper --- */
+        .page-content-wrapper {
+            flex: 1;
+            display: flex;
+            width: 100%;
+        }
+
+        .split-screen {
+            display: flex;
+            width: 100%;
+        }
+
+        /* --- Left Side Brand Panel --- */
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #f4f7fc 0%, #eef2f9 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-content {
+            max-width: 450px;
+            text-align: left;
+            z-index: 2;
+        }
+
+        .left-content h1 {
+            font-size: 32px;
+            color: #1e293b;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .left-content p {
+            font-size: 16px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Abstract Illustration Placeholder Graphics */
+        .illustration-box {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 400px;
+            height: 280px;
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600') center/cover;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+        }
+
+        /* --- Right Side Login Portal Panel --- */
+        .right-panel {
+            width: 50%;
+            max-width: 650px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.02);
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Monogram Brand Vector Layout Representation */
+        .brand-logo-graphics {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .brand-logo-graphics .logo-circle {
+            font-size: 52px;
+            font-weight: 800;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .brand-logo-graphics .logo-circle span {
+            color: #ef4444;
+        }
+
+        .login-card h2 {
+            font-size: 24px;
+            color: #0f172a;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* --- Interactive Input Fields Layout --- */
+        .form-container-box {
+            width: 100%;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .phone-input-wrapper {
+            display: flex;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .phone-input-wrapper:focus-within {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+        }
+
+        .country-code-prefix {
+            padding: 14px 16px;
+            background-color: #f8fafc;
+            border-right: 1px solid #cbd5e1;
+            color: #475569;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .phone-input-wrapper input {
+            flex: 1;
+            border: none;
+            padding: 14px 16px;
+            font-size: 15px;
+            color: #0f172a;
+            outline: none;
+        }
+
+        .phone-input-wrapper input::placeholder {
+            color: #94a3b8;
+        }
+
+        .alternate-auth-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 35px;
+            transition: color 0.2s;
+        }
+
+        .alternate-auth-link:hover {
+            color: #2980b9;
+        }
+
+        /* --- Action Controls --- */
+        .btn-submit-action {
+            width: 100%;
+            background-color: #f1f5f9;
+            color: #94a3b8;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: not-allowed;
+            transition: all 0.3s;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Activated state button when matching input constraints */
+        .btn-submit-action.ready-state {
+            background-color: #3498db;
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn-submit-action.ready-state:hover {
+            background-color: #2980b9;
+        }
+
+        .terms-notices-text {
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .terms-notices-text a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .terms-notices-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Standardized Footer Styles --- */
+        .main-footer {
+            background-color: #1a252f;
+            color: #bdc3c7;
+            padding: 40px 0 20px 0;
+            border-top: 1px solid #2c3e50;
+        }
+
+        .footer-grid {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 30px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #3498db;
+        }
+
+        .footer-column p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .footer-column p i {
+            margin-right: 8px;
+            color: #3498db;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2c3e50;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* --- Responsive Viewport Adaptations --- */
+        @media (max-width: 900px) {
+            .left-panel {
+                display: none;
+            }
+            .right-panel {
+                width: 100%;
+                max-width: 100%;
+                padding: 40px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">
+            <a href="#" class="logo-text">C<span>N</span>C</a>
+        </div>
+        <button class="menu-toggle" aria-label="Toggle Navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="./home.html">Home</a></li>
+                <li><a href="./courses.html">Courses</a></li>
+                 <li><a href="./blog.html">Blog</a></li>
+                 <li><a href="./rackrental.html">Rack Rental</a></li>
+                <li><a href="./victory.html">Our Victory</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./login.html" class="login-btn">App Login</a></li>
+                
+               
+                
+               
+
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-content-wrapper">
+        <div class="split-screen">
+            
+            <aside class="left-panel">
+                <div class="left-content">
+                    <h1>The future of education is here</h1>
+                    <p>With an all in one platform for the teaching world</p>
+                </div>
+                <div class="illustration-box"></div>
+            </aside>
+
+            <main class="right-panel">
+                <div class="login-card">
+                    
+                    <div class="brand-logo-graphics">
+                        <div class="logo-circle">C<span>N</span>C</div>
+                    </div>
+
+                    <h2>Welcome to Core Networking Classes!</h2>
+
+                    <div class="form-container-box">
+                        <label class="input-label">Your Mobile Number</label>
+                        
+                        <div class="phone-input-wrapper">
+                            <div class="country-code-prefix">+91</div>
+                            <input type="tel" id="userPhoneNumber" placeholder="Enter your mobile number" oninput="toggleButtonState(this)">
+                        </div>
+
+                        <a href="#" class="alternate-auth-link">
+                            <i class="far fa-envelope"></i> Use your email instead
+                        </a>
+
+                        <button type="submit" id="submitBtn" class="btn-submit-action" disabled>Proceed Securely</button>
+
+                        <p class="terms-notices-text">
+                            By continuing, you agree to the <a href="#">terms and conditions</a>
+                        </p>
+                    </div>
+
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Our Core Segments</h3>
+                <ul>
+                    <li><a href="#">Advanced Networking</a></li>
+                    <li><a href="#">Security Infrastructure</a></li>
+                    <li><a href="#">Wireshark Diagnostics</a></li>
+                    <li><a href="#">Cisco SDWAN Architecture</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi NCR, India</p>
+                <p><i class="fas fa-envelope"></i> admin@corenetworkingclasses.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 | Tech CNC | Core Networking Classes</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleButtonState(input) {
+            const btn = document.getElementById('submitBtn');
+            if(input.value.trim().length >= 10) {
+                btn.classList.add('ready-state');
+                btn.removeAttribute('disabled');
+            } else {
+                btn.classList.remove('ready-state');
+                btn.setAttribute('disabled', 'true');
+            }
+        }
+    </script>
+
+</body>
+</html>

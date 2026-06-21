@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisco Online Networking Courses For Beginner - CNC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Base Resets & Fonts --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Header Styles --- */
+        .main-header {
+            background-color: #1a252f;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .logo .logo-text span {
+            color: #e74c3c;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu ul li {
+            margin-left: 20px;
+        }
+
+        .nav-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu ul li a:hover, .nav-menu ul li a.active {
+            color: #3498db;
+        }
+
+        .login-btn {
+            background-color: #3498db;
+            padding: 8px 16px;
+            border-radius: 4px;
+        }
+
+        .login-btn:hover {
+            background-color: #2980b9;
+            color: #fff !important;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero-section .subtitle {
+            color: #3498db;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .hero-section h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            font-size: 16px;
+            color: #bdc3c7;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 12px 28px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #c0392b;
+        }
+
+        /* --- Main App Content View Switcher --- */
+        .app-view {
+            display: none;
+        }
+
+        .app-view.active-view {
+            display: block;
+        }
+
+        /* --- Services/Courses Grid Section --- */
+        .services-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .service-card .icon {
+            font-size: 40px;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .service-card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            height: 70px;
+            overflow: hidden;
+        }
+
+        .card-link {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* --- Detailed Inner Segment Page Layouts --- */
+        .segment-container {
+            padding: 60px 0;
+            background-color: #fff;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .segment-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 2px solid #f1f2f6;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .segment-header i {
+            font-size: 45px;
+            color: #3498db;
+        }
+
+        .segment-header h2 {
+            font-size: 32px;
+            color: #2c3e50;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #7f8c8d;
+            color: #fff;
+            padding: 8px 18px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            background-color: #95a5a6;
+        }
+
+        .segment-content h4 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin: 25px 0 10px 0;
+        }
+
+        .segment-content ul {
+            list-style-position: inside;
+            margin-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        .segment-content ul li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        /* --- Stats Counter Section --- */
+        .stats-section {
+            background-color: #34495e;
+            color: #fff;
+            padding: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            text-align: center;
+            gap: 20px;
+        }
+
+        .stat-item i {
+            font-size: 35px;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .stat-item h3 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        /* --- Footer Section --- */
+        .main-footer {
+            background-color: #1a252f;
+            color: #bdc3c7;
+            padding: 60px 0 20px 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 18px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .footer-column ul li a i {
+            font-size: 10px;
+            margin-right: 10px;
+            color: #3498db;
+        }
+
+        .footer-column ul li a:hover {
+            color: #3498db;
+            padding-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column p {
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-column p i {
+            margin-right: 10px;
+            color: #3498db;
+            width: 20px;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            background-color: #2c3e50;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #3498db;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2c3e50;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        /* --- Floating WhatsApp Button --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none; 
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-section h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo" onclick="showView('home')">
+            <span class="logo-text">C<span>N</span>C</span>
+        </div>
+        <button class="menu-toggle" aria-label="Toggle Navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="./home.html" class="active" onclick="showView('home')">Home</a></li>
+                <li><a href="./courses.html" onclick="showView('home')">Courses</a></li>
+                <li><a href="./victory.html">Our Victory</a></li>
+                 <li><a href="./blog.html">Blog</a></li>
+                 <li><a href="./rackrental.html">Rack Rental</a></li>
+                  <li><a href="./certificate.html">Certificate</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./login.html" class="login-btn">App Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="home-view" class="app-view active-view">
+        <section class="hero-section">
+            <div class="container">
+                <span class="subtitle">What CNC Offer to Candidates</span>
+                <h1>100% Job Assurance Program</h1>
+                <p>If you're passionate about networking, MVIP is your golden ticket. Unlock a world of opportunities with our 100% job assurance. We deliver the physical training on the Real devices, racks how the industry engineer actually works on physical devices, migration activity stuff & Interview preparation.</p>
+                <button class="btn-primary" onclick="showView('mvip')">Job Assurance Course <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <section class="services-section">
+            <div class="container">
+                <h2 class="section-title">Our Best Services</h2>
+                <div class="services-grid">
+                    
+                    <div class="service-card" onclick="showView('networking')">
+                        <div class="icon"><i class="fas fa-globe"></i></div>
+                        <h3>Networking</h3>
+                        <p>Deep Dive Training in Networking with advanced Topics "BGP" "MPLS" "MPLSL2VPN" "MPLSL3VPN" "L2TPv3" "ATOM" "Segment Routing"</p>
+                        <span class="card-link">Take Your First Step <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="service-card" onclick="showView('security')">
+                        <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Security</h3>
+                        <p>Learn Multiple Technologies including Ethical Hacking, Cyber Security, Security+ and Many More..</p>
+                        <span class="card-link">Learn Security <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="service-card" onclick="showView('wireshark')">
+                        <div class="icon"><i class="fas fa-desktop"></i></div>
+                        <h3>WireShark</h3>
+                        <p>Deep Packet Analysis and IPSEC Packet Encryption & Decryption in Live Network Using Encryption and Authentication Key</p>
+                        <span class="card-link">Enroll In Wireshark <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="service-card" onclick="showView('sdwan')">
+                        <div class="icon"><i class="fas fa-globe"></i></div>
+                        <h3>SDWAN</h3>
+                        <p>Learn SDWAN Scratch To Expert with All Lab Access</p>
+                        <span class="card-link">Get SDWAN Training <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="service-card" onclick="showView('bgpmpls')">
+                        <div class="icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>Advance BGP/MPLS</h3>
+                        <p>Learn how Advance BGP & MPLS used in Service Provider Network & Path Manipulation Tricks</p>
+                        <span class="card-link">Learn BGP/MPLS <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="service-card" onclick="showView('ceh')">
+                        <div class="icon"><i class="fas fa-user-secret"></i></div>
+                        <h3>CEH</h3>
+                        <p>Learn How Things work in Certified Ethical Hacking Course and Secret of Tricks used in Hacking</p>
+                        <span class="card-link">Be A Certified Hacker <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="service-card" onclick="showView('f5ltm')">
+                        <div class="icon"><i class="fas fa-cogs"></i></div>
+                        <h3>F5-LTM</h3>
+                        <p>Learn How BIG-IP F5 Load Balancer Works and how These devices Generate traffic & Get A Chance To learn Multiple Use-Cases</p>
+                        <span class="card-link">Explore F5-LTM <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="mvip-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>MVIP 100% Job Assurance Training</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Our flagship Master Vendor Program (MVIP) bridges the gap between classic theoretical learning and enterprise production networks.</p>
+                    <h4>Program Deliverables:</h4>
+                    <ul>
+                        <li>Rigorous training on raw hardware, components, switches, and edge edge routers.</li>
+                        <li>Live maintenance windows and hot-migration simulations.</li>
+                        <li>Personalized resume scrubbing and multi-tiered mock technical interviews.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="networking-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-globe"></i>
+                    <h2>Advanced Core Networking</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Master enterprise core operations, data distribution mechanisms, and wide area connectivity options utilizing standardized industrial blueprint guidelines.</p>
+                    <h4>Key Architectural Elements Explored:</h4>
+                    <ul>
+                        <li>Interior Gateway Protocols (Optimized multi-area OSPFv3 & IS-IS engines).</li>
+                        <li>Any Transport over MPLS (AToM) Layer 2 and Layer 3 Virtual Private Networks.</li>
+                        <li>Next-generation transport mechanisms including Segment Routing (SR) global paths.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="security-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>Security Infrastructure & Cyber Defence</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Learn how to design, enforce, and maintain defensive modern barriers for distributed corporate architectures and critical computational centers.</p>
+                    <h4>Core Security Curriculum Focus:</h4>
+                    <ul>
+                        <li>Next-Generation Firewalls (NGFW) policy controls and deep packet inspection.</li>
+                        <li>Cryptographic site-to-site Virtual Private Networks using advanced parameter setups.</li>
+                        <li>Identity management, access control parameters, and vulnerability identification.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wireshark-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-desktop"></i>
+                    <h2>Wireshark Deep Packet Diagnostics</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Equip yourself with the forensic visibility needed to isolate application layer bottlenecks, unexpected retransmissions, and malicious payloads directly inside transit pipelines.</p>
+                    <h4>Technical Analysis Targets:</h4>
+                    <ul>
+                        <li>Cryptographic extraction and manual calculation validation workflows.</li>
+                        <li>Handshake tracing, drop detection, and window size debugging.</li>
+                        <li>Custom dynamic filtering syntax configurations for massive live interface captures.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sdwan-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-project-diagram"></i>
+                    <h2>Cisco SD-WAN Architecture</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Transition from old-school manual leg legacy hub-and-spoke topologies to programmatically engineered edge overlays controlled via orchestrators.</p>
+                    <h4>Operational Blueprints Covered:</h4>
+                    <ul>
+                        <li>Orchestration component synchronization (vManage, vSmart, vBond, and vEdge platforms).</li>
+                        <li>Centralized path selection controls and zero-touch configuration profiles.</li>
+                        <li>Dynamic topology changes based on latency, jitter, or real-time loss tracking.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bgpmpls-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Advanced BGP & MPLS Engineering</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Designed for engineers aiming for Tier-3 infrastructure roles within service provider backbones and globally distributed autonomous hubs.</p>
+                    <h4>Advanced Capabilities Taught:</h4>
+                    <ul>
+                        <li>BGP Attribute modifications (Local Pref, MED, Weight, Communities manipulation).</li>
+                        <li>Label Switched Paths (LSPs) distributions using Label Distribution Protocols (LDP).</li>
+                        <li>Route reflection models and scale strategies for multi-homed corporate gateways.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ceh-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-user-secret"></i>
+                    <h2>Certified Ethical Hacker (CEH)</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Adopt defensive strategies by mastering modern scanning vectors, infrastructure enumeration mechanisms, and system execution vectors used by malicious actors.</p>
+                    <h4>Practical Penetration Frameworks:</h4>
+                    <ul>
+                        <li>Footprinting, reconnaissance collection vectors, and advanced asset discovery rules.</li>
+                        <li>Wireless signal perimeter exploitation vulnerabilities and containment tactics.</li>
+                        <li>Evasion mechanisms across perimeter systems and threat signature patterns.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="f5ltm-view" class="app-view">
+        <div class="container">
+            <div class="segment-container">
+                <button class="btn-back" onclick="showView('home')"><i class="fas fa-arrow-left"></i> Back to Services</button>
+                <div class="segment-header">
+                    <i class="fas fa-cogs"></i>
+                    <h2>F5 BIG-IP Local Traffic Manager (LTM)</h2>
+                </div>
+                <div class="segment-content">
+                    <p>Ensure high application availability, lightning-fast response speeds, and structural scaling using data distribution controls.</p>
+                    <h4>Application Delivery Skills:</h4>
+                    <ul>
+                        <li>Virtual Servers, Pools, Nodes, and advanced Load Balancing method distributions.</li>
+                        <li>Custom traffic engineering scripting utilizing programmatic programmatic iRules logic profiles.</li>
+                        <li>SSL/TLS high-performance decryption processing routines on internal engines.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="stats-section">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <i class="fas fa-user-graduate"></i>
+                <h3>5000+</h3>
+                <p>Students Trained</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-laptop-code"></i>
+                <h3>200+</h3>
+                <p>Cloud Racks Available</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-award"></i>
+                <h3>50+</h3>
+                <p>CCIE Certified Achievers</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            
+            <div class="footer-column">
+                <h3>Our Core Segments</h3>
+                <ul>
+                    <li><a onclick="showView('networking')"><i class="fas fa-chevron-right"></i> Advanced Networking</a></li>
+                    <li><a onclick="showView('security')"><i class="fas fa-chevron-right"></i> Security Infrastructure</a></li>
+                    <li><a onclick="showView('wireshark')"><i class="fas fa-chevron-right"></i> Wireshark Diagnostics</a></li>
+                    <li><a onclick="showView('sdwan')"><i class="fas fa-chevron-right"></i> Cisco SDWAN Engines</a></li>
+                    <li><a onclick="showView('bgpmpls')"><i class="fas fa-chevron-right"></i> BGP & MPLS Engineering</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Popular Certifications</h3>
+                <ul>
+                    <li><a onclick="showView('networking')"><i class="fas fa-chevron-right"></i> CCNA 200-301 Track</a></li>
+                    <li><a onclick="showView('ceh')"><i class="fas fa-chevron-right"></i> Certified Ethical Hacker</a></li>
+                    <li><a onclick="showView('f5ltm')"><i class="fas fa-chevron-right"></i> BIG-IP F5 LTM Traffic</a></li>
+                    <li><a onclick="showView('mvip')"><i class="fas fa-chevron-right"></i> MVIP Job Program</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Access</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Lab Rack Rentals</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Alumni Success Gallery</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Technical Blog</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Open Support Ticket</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi NCR, India</p>
+                <p><i class="fab fa-whatsapp"></i> +91-962-534-3392</p>
+                <p><i class="fas fa-envelope"></i> admin@corenetworkingclasses.com</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook Link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="YouTube Link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="LinkedIn Link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 | Tech CNC | Core Networking Classes</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919625343392" class="whatsapp-float" target="_blank" aria-label="Contact via WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        function showView(viewId) {
+            // Hide all active view panels
+            const views = document.querySelectorAll('.app-view');
+            views.forEach(view => {
+                view.classList.remove('active-view');
+            });
+
+            // Target target active element block
+            const targetView = document.getElementById(viewId + '-view');
+            if(targetView) {
+                targetView.classList.add('active-view');
+                // Smoothly snap container view to top coordinates
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+
+</body>
+</html>

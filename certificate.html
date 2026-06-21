@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Certificate Verification Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html,
+body{
+    margin:0;
+    padding:0;
+}
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-main: #334155;
+            --brand-orange: #e67e22;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+       body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,.95) 0%,
+            rgba(30,58,138,.92) 100%
+        ),
+        url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1600')
+        center/cover no-repeat fixed;
+}
+
+        /* Ambient neon data glow lines */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 219, 0.15) 0%, transparent 60%);
+            animation: auroraGlow 12s infinite linear;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes auroraGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Global Brand Navbar --- */
+        .main-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 4%;
+            background: rgba(13, 21, 28, 0.92);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            width: 100%;
+            position: relative;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand-logo h2 {
+            color: #fff; 
+            font-weight: 800; 
+            letter-spacing: 1px;
+        }
+
+        .brand-logo span {
+            color: var(--brand-orange);
+        }
+
+        .nav-links-list {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links-list a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links-list a:hover, .nav-links-list a.active {
+            color: var(--brand-orange);
+        }
+
+        .nav-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #fff;
+        }
+
+        .nav-right-actions a {
+            color: #fff;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-right-actions a:hover {
+            color: var(--brand-orange);
+        }
+
+        /* --- Center Body Layout Content Area --- */
+        .page-content-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+       .container{
+    width:100%;
+    max-width:480px;
+
+    background:rgba(255,255,255,0.92);
+
+    padding:40px 30px;
+
+    border-radius:24px;
+
+    border:1px solid rgba(255,255,255,0.6);
+
+    box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);
+
+    text-align:center;
+
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+
+    transition:transform .3s ease,
+               box-shadow .3s ease;
+}
+        .container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px -10px rgba(37, 99, 219, 0.25);
+        }
+
+        .logo-icon {
+            font-size: 3.2rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 6px rgba(37, 99, 219, 0.2));
+            animation: pulseIcon 2s infinite alternate;
+        }
+
+        @keyframes pulseIcon {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.06); }
+        }
+
+        .container h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+            font-size: 1.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        /* Toggle Navigation Tabs */
+        .tab-navigation {
+            display: flex;
+            background: #e2e8f0;
+            padding: 6px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: var(--accent);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+        }
+
+        /* Form Container Control */
+        .form-panel {
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .form-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form styling */
+        .form-group {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--primary);
+            transition: all 0.25s ease;
+            outline: none;
+            background: #ffffff;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(37, 99, 219, 0.18);
+            background: #ffffff;
+        }
+
+        /* Special style for 4-digit numeric code */
+        .digit-input {
+            letter-spacing: 12px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding-left: 24px !important;
+        }
+
+        .verify-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background: var(--accent);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(37, 99, 219, 0.35);
+        }
+
+        .verify-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 6px 20px rgba(37, 99, 219, 0.45);
+        }
+
+        .verify-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer Info */
+        .footer-note {
+            margin-top: 25px;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Responsive Navbar Tweaks */
+        @media (max-width: 992px) {
+            .main-navigation {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                padding: 15px 4%;
+            }
+            .nav-links-list {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+        }
+        /* Footer Styles */
+       .main-footer{
+    background: rgba(13, 21, 28, 0.95);
+    color: #94a3b8;
+    padding: 40px 4% 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-column p, .footer-column ul {
+            font-size: 0.9rem;
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-column a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: var(--brand-orange);
+        }
+
+        .social-links a {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-navigation">
+        <div class="brand-logo">
+            <h2>C<span>N</span>C</h2>
+        </div>
+        <nav>
+            <ul class="nav-links-list">
+                <li><a href="./home.html">Home</a></li>
+                <li><a href="./courses.html">Courses</a></li>
+                <li><a href="./rackrental.html">Rack Rental</a></li>
+                <li><a href="./blog.html">Blog</a></li>
+                <li><a href="./victory.html">Our Victory</a></li>
+                <li><a href="./certificate.html" class="active">E Certificate</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./login.html">App Login</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right-actions">
+            <a href="#" aria-label="Facebook Link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="YouTube Link"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="LinkedIn Link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" style="margin-left: 10px;" aria-label="Search Element"><i class="fas fa-search"></i></a>
+        </div>
+    </header>
+
+    <div class="page-content-wrapper">
+        <div class="container">
+            <div class="logo-icon">📜</div>
+            <h2>Certificate Verification</h2>
+            <p class="subtitle">Verify your credentials quickly and securely</p>
+
+            <div class="tab-navigation">
+                <button class="tab-btn active" onclick="switchTab('course')">Course Completion</button>
+                <button class="tab-btn" onclick="switchTab('seminar')">Seminar Completion</button>
+            </div>
+
+            <div id="course-panel" class="form-panel active">
+                <form onsubmit="handleVerification(event, 'Course ID')">
+                    <div class="form-group">
+                        <label for="candidate-id">Candidate ID</label>
+                        <input type="text" id="candidate-id" placeholder="e.g., CNC-2026-X892" required>
+                    </div>
+                    <button type="submit" class="verify-btn">Verify Course Certificate</button>
+                </form>
+            </div>
+
+            <div id="seminar-panel" class="form-panel">
+                <form onsubmit="handleVerification(event, 'Seminar Code')">
+                    <div class="form-group">
+                        <label for="verification-code">4-Digit Verification Code</label>
+                        <input type="text" id="verification-code" class="digit-input" maxlength="4" pattern="\d{4}" placeholder="0000" inputmode="numeric" required>
+                    </div>
+                    <button type="submit" class="verify-btn">Verify Seminar Certificate</button>
+                </form>
+            </div>
+
+            <div class="footer-note">
+                Secure Verification Powered by Tech CNC System
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(type) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const coursePanel = document.getElementById('course-panel');
+            const seminarPanel = document.getElementById('seminar-panel');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            if(type === 'course') {
+                tabs[0].classList.add('active');
+                coursePanel.classList.add('active');
+                seminarPanel.classList.remove('active');
+            } else {
+                tabs[1].classList.add('active');
+                seminarPanel.classList.add('active');
+                coursePanel.classList.remove('active');
+            }
+        }
+
+        function handleVerification(event, type) {
+            event.preventDefault();
+            if(type === 'Course ID') {
+                const idValue = document.getElementById('candidate-id').value;
+                alert(`Searching records for Candidate ID: "${idValue}"...`);
+            } else {
+                const codeValue = document.getElementById('verification-code').value;
+                alert(`Validating Seminar Pin: [${codeValue}]...`);
+            }
+        }
+    </script>
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Contact Details</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi NCR, India</p>
+                <p><i class="fas fa-envelope"></i> admin@corenetworkingclasses.com</p>
+                <p><i class="fas fa-phone-alt"></i> +91 962 534 3392</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Support Ticket</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 | Tech CNC | Core Networking Classes</p>
+        </div>
+    </footer>
+</body>
+</html>

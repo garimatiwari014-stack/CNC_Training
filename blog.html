@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Learn | Success - Core Networking Classes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Base Resets & Theme Colors --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Business Header Top Bar --- */
+        .top-info-bar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #eee;
+            padding: 10px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .top-left-meta {
+            display: flex;
+            gap: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item i {
+            color: #e67e22;
+            font-size: 16px;
+        }
+
+        .btn-touch {
+            background-color: #d35400;
+            color: #fff;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-touch:hover {
+            background-color: #ba4a00;
+        }
+
+        /* --- Hero Header Background --- */
+        .hero-header-wrapper {
+            background: linear-gradient(rgba(13, 21, 28, 0.9), rgba(13, 21, 28, 0.95)), 
+                        url('https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1200') no-repeat center center;
+            background-size: cover;
+            padding-bottom: 60px;
+            position: relative;
+        }
+
+        /* --- Navigation Menu Bar --- */
+        .main-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 4%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .brand-logo img {
+            height: 50px;
+        }
+
+        .nav-links-list {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links-list a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links-list a:hover, .nav-links-list a.active {
+            color: #e67e22;
+        }
+
+        .nav-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #fff;
+        }
+
+        .nav-right-actions a {
+            color: #fff;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-right-actions a:hover {
+            color: #e67e22;
+        }
+
+        /* --- Blog Header Intro Title --- */
+        .page-headline {
+            text-align: center;
+            color: #fff;
+            padding: 60px 0 20px 0;
+        }
+        
+        .page-headline h1 {
+            font-size: 38px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* --- Core Content Grid Layout --- */
+        .main-content-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+            margin-top: -30px; 
+            position: relative;
+            z-index: 5;
+            padding-bottom: 60px;
+        }
+
+        /* --- Blog Cards Feed --- */
+        .blog-posts-feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .blog-card {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-card-img {
+            width: 100%;
+            height: 180px;
+            background-color: #0b4b87;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .blog-card:nth-child(2) .blog-card-img { background-color: #2c3e50; }
+        .blog-card:nth-child(3) .blog-card-img { background-color: #16a085; }
+        .blog-card:nth-child(4) .blog-card-img { background-color: #2980b9; }
+        .blog-card:nth-child(5) .blog-card-img { background-color: #8e44ad; }
+        .blog-card:nth-child(6) .blog-card-img { background-color: #27ae60; }
+
+        .blog-card-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .blog-card-body h3 {
+            font-size: 19px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .blog-card-body p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .read-more-btn {
+            color: #d35400;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        /* --- Individual View Container --- */
+        .single-post-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .back-to-blogs {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0b4b87;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .single-post-title {
+            font-size: 28px;
+            color: #1a252f;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .single-post-meta {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #f1f2f6;
+            padding-bottom: 15px;
+        }
+
+        .single-post-body h4 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin: 25px 0 10px 0;
+        }
+
+        .single-post-body p {
+            font-size: 15px;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        .technical-code-block {
+            background: #1a252f;
+            color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #e67e22;
+        }
+
+        /* --- Sidebar Widgets --- */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .widget-box {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .widget-box h3 {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-left: 4px solid #e67e22;
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-container-box {
+            position: relative;
+        }
+
+        .search-container-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-container-box i {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #777;
+        }
+
+        .input-form-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .input-form-group input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .input-form-group button {
+            background-color: #0d151c;
+            color: #fff;
+            border: none;
+            padding: 0 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .input-form-group button:hover {
+            background-color: #e67e22;
+        }
+
+        .sidebar-social-flex {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sidebar-social-flex a {
+            width: 38px;
+            height: 38px;
+            background: #f1f2f6;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .sidebar-social-flex a:hover {
+            background-color: #e67e22;
+            color: #fff;
+        }
+
+        /* --- Footer Styles --- */
+        .main-footer {
+            background-color: #0d151c;
+            color: #a5b1bc;
+            padding: 60px 0 20px 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 17px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #a5b1bc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-column ul li a i {
+            font-size: 11px;
+            margin-right: 8px;
+            color: #e67e22;
+        }
+
+        .footer-column p {
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-column p i {
+            color: #e67e22;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1a252f;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .whatsapp-sticky-widget {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #fff;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        @media (max-width: 992px) {
+            .main-content-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-info-bar">
+        <div class="top-left-meta">
+            <div class="meta-item"><i class="far fa-clock"></i> Mon to Sat: 10 Am - 10 Pm</div>
+            <div class="meta-item"><i class="fas fa-phone-alt"></i> +91 962 534 3392</div>
+            <div class="meta-item"><i class="fas fa-phone-alt"></i> +91 931 534 4729</div>
+        </div>
+        <a href="#" class="btn-touch">Get in Touch <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="hero-header-wrapper">
+        <header class="main-navigation">
+            <div class="brand-logo">
+                <h2 style="color: #fff; font-weight: 800; letter-spacing: 1px;">C<span style="color:#e67e22;">N</span>C</h2>
+            </div>
+            <nav>
+                <ul class="nav-links-list">
+                    <li><a href="./home.html">Home</a></li>
+                    <li><a href="./courses.html">Courses</a></li>
+                    <li><a href="./rackrental.html">Rack Rental</a></li>
+                    <li><a href="./blog.html" class="active">Blog</a></li>
+                    <li><a href="./victory.html">Our Victory</a></li>
+                    <li><a href="./certificate.html">E Certificate</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                    <li><a href="./login.html">App Login</a></li>
+                </ul>
+            </nav>
+            <div class="nav-right-actions">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" style="margin-left: 10px;"><i class="fas fa-search"></i></a>
+            </div>
+        </header>
+
+        <div class="page-headline">
+            <h1 id="dynamic-headline">Our Publications & Technical Guides</h1>
+            <p id="dynamic-subline" style="color: #a5b1bc; font-size: 14px; margin-top: 5px;">Explore enterprise network deployment scenarios from core engineers</p>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 40px;">
+        <div class="main-content-layout">
+            
+            <div id="blog-workspace-viewport">
+                <main class="blog-posts-feed">
+                    
+                    <div class="blog-card" onclick="loadArticleSegment('span_architecture')">
+                        <div class="blog-card-img">SPAN / RSPAN / ERSPAN Deployment Architecture</div>
+                        <div class="blog-card-body">
+                            <h3>SPAN/RPSN/ERSPAN</h3>
+                            <p>SPAN Switch Port Analyzer is a tool we run on Switches to capture packets between 2 devices...</p>
+                            <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="blog-card" onclick="loadArticleSegment('traceroute_mechanics')">
+                        <div class="blog-card-img">ICMP Packet Flow & Hop Verification</div>
+                        <div class="blog-card-body">
+                            <h3>Traceroute</h3>
+                            <p>What is #Traceroute & How it Works? Traceroute is a network diagnostic utility used to track route paths...</p>
+                            <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="blog-card" onclick="loadArticleSegment('eigrp_workbook')">
+                        <div class="blog-card-img">Deep Dive EIGRP Complete Lab Workbook</div>
+                        <div class="blog-card-body">
+                            <h3>EIGRP Basics</h3>
+                            <p>Overview of EIGRP - Enhanced Interior Gateway Routing Protocol. EIGRP is an Advanced Distance Vector routing protocol...</p>
+                            <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="blog-card" onclick="loadArticleSegment('bgp_loadbalancing')">
+                        <div class="blog-card-img">Advanced BGP Path Selection Criteria</div>
+                        <div class="blog-card-body">
+                            <h3>BGP Load Balancing</h3>
+                            <p>Learn the multiple use cases of BGP Load-Balancing Mechanism in a live service provider transit architecture network...</p>
+                            <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="blog-card" onclick="loadArticleSegment('policy_routing')">
+                        <div class="blog-card-img">Source-Based Routing Implementation</div>
+                        <div class="blog-card-body">
+                            <h3>Policy Based Routing</h3>
+                            <p>This is called Source-based routing, whenever we talk about altering next-hop calculations apart from standard Routing Tables...</p>
+                            <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="blog-card" onclick="loadArticleSegment('urpf_security')">
+                        <div class="blog-card-img">Unicast Reverse Path Forwarding Security</div>
+                        <div class="blog-card-body">
+                            <h3>URPF Mechanics</h3>
+                            <p>Mitigate IP spoofing attacks by tracking lookup interfaces against reverse-path reachability metrics seamlessly...</p>
+                            <span class="read-more-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+
+            <aside class="right-sidebar">
+                <div class="widget-box">
+                    <h3>Search</h3>
+                    <div class="search-container-box">
+                        <input type="text" placeholder="Search articles...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <div class="widget-box">
+                    <h3>For Newsletter</h3>
+                    <div class="input-form-group">
+                        <input type="email" placeholder="Enter Email For Job Updates">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+
+                <div class="widget-box">
+                    <h3>Follow us</h3>
+                    <div class="sidebar-social-flex">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <h3>Top Certification Courses</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNA Enterprise Certification</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNP ENARSI Certification</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Cisco SDWAN Certification</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect with Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi NCR, India</p>
+                <p><i class="fab fa-whatsapp"></i> +91-962-534-3392</p>
+                <p><i class="fas fa-envelope"></i> admin@corenetworkingclasses.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 | Tech CNC | Core Networking Classes</p>
+        </div>
+    </footer>
+
+    <script>
+        const publicationsDatabase = {
+            span_architecture: {
+                title: "SPAN / RSPAN / ERSPAN Deployment Guide & Internal Port Analyzer Architecture",
+                meta: "Published by Core Engineering Team | Category: Enterprise Switching Protocols",
+                headline: "SPAN Technical Analysis Portfolio",
+                subline: "Deep dive inspection patterns tracking local and remote destination mirroring fabrics",
+                content: `
+                    <p>SPAN (Switch Port Analyzer) is an optimization mapping design executing real-time payload duplication configurations. Network operations engineers leverage SPAN configurations to forward mirrored packets to external analysis tools like Wireshark without breaking data pipelines.</p>
+                    <h4>1. Local SPAN Architecture</h4>
+                    <p>Local SPAN occurs when source monitoring ports and diagnostic destination targets share residency space inside the exact same hardware chassis platform node.</p>
+                    <div class="technical-code-block">
+Switch(config)# monitor session 1 source interface gigabitEthernet 0/1<br>
+Switch(config)# monitor session 1 destination interface gigabitEthernet 0/2
+                    </div>
+                    <h4>2. Remote SPAN (RSPAN)</h4>
+                    <p>RSPAN handles mirroring matrices across multiple complex layers by mapping captured traffic across designated remote VLAN trunks spanning several distributed switching chassis groups.</p>
+                    <h4>3. Encapsulated Remote SPAN (ERSPAN)</h4>
+                    <p>ERSPAN uses GRE encapsulation, transforming mirrored frames into standard Layer 3 routable payloads. This allows telemetry streams to navigate through core router hops and remote endpoints effortlessly.</p>
+                `
+            },
+            traceroute_mechanics: {
+                title: "ICMP Traceroute Functional Framework & Hop Counter Expiry Analysis",
+                meta: "Published by Core Engineering Team | Category: Core Network Diagnostics",
+                headline: "Path Diagnostics Masterclass",
+                subline: "Analyzing systemic network delays using step-by-step TTL value controls",
+                content: `
+                    <p>Traceroute tracks asymmetric paths across multiple networks using strategic increments of the Time-To-Live (TTL) field in IP packet headers.</p>
+                    <h4>The Step-by-Step Hop Traversal Engine</h4>
+                    <p>The processing engine starts by sending a probe payload initialized with a TTL value equal to 1. When the first upstream gateway router intercepts this tracking payload, it decreases the value by 1. Since the counter hits 0, the node discards the payload and replies with an <strong>ICMP Time Exceeded</strong> notification.</p>
+                    <div class="technical-code-block">
+$ traceroute 8.8.8.8<br>
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets<br>
+ 1  192.168.1.1 (192.168.1.1)  1.421 ms  1.310 ms<br>
+ 2  10.0.0.1 (10.0.0.1)  4.812 ms  5.109 ms
+                    </div>
+                    <p>This discovery loop repeats with incremental TTL values until the payload reaches its final target destination node, providing a clear path profile of all hops along the way.</p>
+                `
+            },
+            eigrp_workbook: {
+                title: "Deep Dive EIGRP Complete Engineering Workbook & Convergence Optimization",
+                meta: "Published by Core Engineering Team | Category: Advanced Interior Routing",
+                headline: "EIGRP Advanced Architecture",
+                subline: "Mastering composite metrics and fast alternate route selection paths",
+                content: `
+                    <p>EIGRP (Enhanced Interior Gateway Routing Protocol) is an advanced distance vector tracking protocol that uses the Diffusing Update Algorithm (DUAL) to guarantee loop-free backup routes.</p>
+                    <h4>Composite Weights Configuration Formulas</h4>
+                    <p>By default, metric calculations analyze operational path parameters utilizing scaled metric definitions:</p>
+                    <div class="technical-code-block">
+Metric = [K1 * Bandwidth + (K2 * Bandwidth) / (256 - Load) + K3 * Delay] * 256
+                    </div>
+                    <h4>Feasible Successor Conditions</h4>
+                    <p>A backup path is elevated to a Feasible Successor only if its reported distance (RD) is strictly less than the feasible distance (FD) of the primary path, enabling sub-second convergence during link failures.</p>
+                `
+            },
+            bgp_loadbalancing: {
+                title: "Advanced Border Gateway Protocol (BGP) Multi-Homed Multipath Balancing",
+                meta: "Published by Core Engineering Team | Category: Transit Provider Architecture",
+                headline: "BGP Path Engineering Portfolio",
+                subline: "Configuring parallel multi-homed provider transit pathways",
+                content: `
+                    <p>Border Gateway Protocol selects a single path by default based on strict criteria like Weight, Local Preference, AS-Path Length, and MED metrics.</p>
+                    <h4>BGP Multipath Execution Parameters</h4>
+                    <p>To enable parallel traffic distribution across identical providers, engineers must override default behavior using matching criteria definitions:</p>
+                    <div class="technical-code-block">
+router bgp 65000<br>
+ maximum-paths 4<br>
+ maximum-paths ibgp 4
+                    </div>
+                    <p>This load distribution optimization model allows you to maximize bandwidth utilization across external service provider connections while ensuring stable path selection patterns.</p>
+                `
+            },
+            policy_routing: {
+                title: "Policy-Based Routing (PBR) Implementations & Source Filtering Frameworks",
+                meta: "Published by Core Engineering Team | Category: Traffic Control Engineering",
+                headline: "PBR System Implementations",
+                subline: "Bypassing standard routing tables via strategic next-hop modifications",
+                content: `
+                    <p>Policy-Based Routing (PBR) gives network administrators the flexibility to route traffic based on source parameters instead of relying solely on destination addresses.</p>
+                    <h4>Route-Map Structural Mapping Logic</h4>
+                    <p>By pairing access lists with logical route maps, you can easily redirect specific traffic classes to dedicated backup service connections:</p>
+                    <div class="technical-code-block">
+ip access-list extended HTTP_TRAFFIC<br>
+ permit tcp any any eq 80<br>
+!<br>
+route-map PBR_POLICY permit 10<br>
+ match ip address HTTP_TRAFFIC<br>
+ set ip next-hop 203.0.113.5
+                    </div>
+                    <p>This allows organizations to prioritize critical system assets over high-speed business connections while routing standard guest traffic through more cost-effective links.</p>
+                `
+            },
+            urpf_security: {
+                title: "Unicast Reverse Path Forwarding (uRPF) Dynamic Edge Anti-Spoofing Operations",
+                meta: "Published by Core Engineering Team | Category: Infrastructure Security Engineering",
+                headline: "uRPF Shield Configurations",
+                subline: "Eliminating spoofed source vectors at the edge tracking boundaries",
+                content: `
+                    <p>Unicast Reverse Path Forwarding (uRPF) helps mitigate distributed denial-of-service (DDoS) attacks by verifying that source IP addresses match legitimate reverse routing paths.</p>
+                    <h4>Strict vs. Loose Processing Modes</h4>
+                    <p>In Strict Mode, the router validates incoming packets by ensuring the source IP is reachable via the exact interface where the traffic arrived. In Loose Mode, the packet is accepted as long as the source IP exists anywhere in the overall routing table.</p>
+                    <div class="technical-code-block">
+interface GigabitEthernet0/1<br>
+ ip verify unicast source reachable-via rx
+                    </div>
+                    <p>Deploying this anti-spoofing mechanism at your network borders stops malformed and malicious traffic right at the edge of your infrastructure.</p>
+                `
+            }
+        };
+
+        let rawBlogFeedHTML = null;
+        let baselineHeadlineText = "";
+        let baselineSublineText = "";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            rawBlogFeedHTML = document.getElementById('blog-workspace-viewport').innerHTML;
+            baselineHeadlineText = document.getElementById('dynamic-headline').innerText;
+            baselineSublineText = document.getElementById('dynamic-subline').innerText;
+        });
+
+        function loadArticleSegment(articleKey) {
+            const article = publicationsDatabase[articleKey];
+            if(!article) return;
+
+            // Change header context titles
+            document.getElementById('dynamic-headline').innerText = article.headline;
+            document.getElementById('dynamic-subline').innerText = article.subline;
+
+            // Build structural page layout
+            const postMarkup = `
+                <article class="single-post-container">
+                    <span onclick="revertToFeedLayout()" class="back-to-blogs">
+                        <i class="fas fa-arrow-left"></i> Back to Publications Overview
+                    </span>
+                    <h2 class="single-post-title">${article.title}</h2>
+                    <div class="single-post-meta">
+                        <i class="far fa-user"></i> Technical Publication | 
+                        <i class="far fa-folder-open"></i> Reference Documentation
+                    </div>
+                    <div class="single-post-body">
+                        ${article.content}
+                    </div>
+                </article>
+            `;
+
+            document.getElementById('blog-workspace-viewport').innerHTML = postMarkup;
+            window.scrollTo({ top: 150, behavior: 'smooth' });
+        }
+
+        function revertToFeedLayout() {
+            document.getElementById('dynamic-headline').innerText = baselineHeadlineText;
+            document.getElementById('dynamic-subline').innerText = baselineSublineText;
+            document.getElementById('blog-workspace-viewport').innerHTML = rawBlogFeedHTML;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

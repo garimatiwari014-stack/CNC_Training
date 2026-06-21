@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCIE Certified Candidates - Our Victory - Core Networking Classes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Base Theme & Resets --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Hero Header Background Banner --- */
+        .hero-victory-wrapper {
+            background: linear-gradient(rgba(4, 4, 4, 0.9), rgba(6, 6, 6, 0.95)), 
+                        url('') no-repeat center center;
+            background-size: cover;
+            padding-bottom: 40px;
+            position: relative;
+        }
+
+        /* --- Transparent Navigation & Top Contacts Row --- */
+        .header-top-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 25px;
+            padding: 15px 5% 5px 5%;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .header-info-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-info-block i {
+            background: rgba(255, 255, 255, 0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .header-info-text strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .btn-touch-header {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: background 0.3s;
+        }
+
+        .btn-touch-header:hover {
+            background-color: #fff;
+            color: #0b4b87;
+        }
+
+        .main-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+
+        .logo-area {
+            color: #fff;
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        .logo-area span { color: #f1c40f; }
+
+        .nav-links-list {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links-list a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links-list a:hover, .nav-links-list a.active {
+            color: #f1c40f;
+        }
+
+        .nav-socials {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-socials a {
+            color: #fff;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .nav-socials a:hover { color: #f1c40f; }
+
+        /* --- Large Victory Typography Overlay --- */
+        .victory-title-graphic {
+            text-align: center;
+            padding: 40px 0 20px 0;
+            color: #ffffff;
+        }
+
+        .victory-title-graphic h1 {
+            font-size: 95px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.8;
+        }
+
+        .victory-title-graphic h1 span {
+            color: #f1c40f;
+            text-transform: lowercase;
+            font-weight: 500;
+            font-size: 80px;
+            margin-left: -5px;
+        }
+
+        /* --- Section Header Headline --- */
+        .section-headline {
+            text-align: center;
+            padding: 50px 0 30px 0;
+        }
+
+        .section-headline h2 {
+            font-size: 36px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        /* --- CCIE Profile Grid Layout --- */
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            padding-bottom: 60px;
+        }
+
+        .candidate-card {
+            background: #ffffff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 20px;
+            border: 1px solid #eef2f5;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-4px);
+            border-color: #f1c40f;
+        }
+
+        .avatar-frame {
+            width: 110px;
+            height: 130px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid #eef2f5;
+        }
+
+        .avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .candidate-details h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .candidate-details p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 3px;
+        }
+
+        .candidate-details .ccie-tag {
+            font-weight: 600;
+            color: #e67e22;
+        }
+
+        /* --- Main Footer Styles --- */
+        .main-footer {
+            background-color: #0d151c;
+            color: #a5b1bc;
+            padding: 60px 0 20px 0;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #a5b1bc;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-column ul li a i {
+            font-size: 11px;
+            margin-right: 8px;
+            color: #f1c40f;
+        }
+
+        .footer-column ul li a:hover {
+            color: #f1c40f;
+        }
+
+        .footer-column p {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-column p i {
+            color: #f1c40f;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1a252f;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* --- Floating Sticky Chat Action --- */
+        .whatsapp-sticky {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #fff;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 992px) {
+            .header-top-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .main-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .victory-title-graphic h1 {
+                font-size: 65px;
+            }
+            .victory-title-graphic h1 span {
+                font-size: 55px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-victory-wrapper">
+        
+        <div class="header-top-row">
+            <div class="header-info-block">
+                <i class="far fa-clock"></i>
+                <div class="header-info-text">
+                    <strong>Business Hours</strong>
+                    Mon to Sat: 10 Am - 10 Pm
+                </div>
+            </div>
+            <div class="header-info-block">
+                <i class="fas fa-phone-alt"></i>
+                <div class="header-info-text">
+                    <strong>+91 962 534 3392</strong>
+                    +91 931 534 4729
+                </div>
+            </div>
+            <a href="#" class="btn-touch-header">Get in Touch <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <header class="main-navigation">
+            <div class="logo-area">C<span>N</span>C</div>
+            <nav>
+                <ul class="nav-links-list">
+                    <li><a href="./blog.html">Home</a></li>
+                    <li><a href="./courses.html">Courses</a></li>
+                    <li><a href="./rackrental.html">Rack Rental</a></li>
+                    <li><a href="./blog.html">Blog</a></li>
+                    <li><a href="./victory.html" class="active">Our Victory</a></li>
+                    <li><a href="./certificate.html">E Certificate</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
+                    <li><a href="./login.html">App Login</a></li>
+                </ul>
+            </nav>
+            <div class="nav-socials">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fas fa-search"></i></a>
+            </div>
+        </header>
+
+        <div class="victory-title-graphic">
+            <h1>OUR<span>victory</span></h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="section-headline">
+            <h2>CCIE Certified Candidates</h2>
+        </section>
+
+        <main class="candidates-grid">
+            
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./images (4).jpg" alt="Law Sah">
+                </div>
+                <div class="candidate-details">
+                    <h3>Law Sah</h3>
+                    <p class="ccie-tag">CCIE #63523</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p1.avif" alt="Edson Ballestas">
+                </div>
+                <div class="candidate-details">
+                    <h3>Edson Ballestas</h3>
+                    <p class="ccie-tag">CCIE #65363</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p2.jpg" alt="Mohit Jain">
+                </div>
+                <div class="candidate-details">
+                    <h3>Mohit Jain</h3>
+                    <p class="ccie-tag">CCIE #65247</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p6.jpg" alt="Beemarajan">
+                </div>
+                <div class="candidate-details">
+                    <h3>Beemarajan</h3>
+                    <p class="ccie-tag">CCIE #65130</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p8.jpg" alt="Rakesh">
+                </div>
+                <div class="candidate-details">
+                    <h3>Rakesh</h3>
+                    <p class="ccie-tag">CCIE #62230</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p12.jpg" alt="Subhramanya">
+                </div>
+                <div class="candidate-details">
+                    <h3>Subhramanya</h3>
+                    <p class="ccie-tag">CCIE #62555</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p13.jpg" alt="Muhammad Abdullah Tarar">
+                </div>
+                <div class="candidate-details">
+                    <h3>Muhammad Abdullah Tarar</h3>
+                    <p class="ccie-tag">CCIE #64472</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p2.jpg" alt="Muhammad Afzal">
+                </div>
+                <div class="candidate-details">
+                    <h3>Muhammad Afzal</h3>
+                    <p class="ccie-tag">CCIE #64199</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p6.jpg" alt="Muhammad Irfan">
+                </div>
+                <div class="candidate-details">
+                    <h3>Muhammad Irfan</h3>
+                    <p class="ccie-tag">CCIE #64112</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+            <div class="candidate-card">
+                <div class="avatar-frame">
+                    <img src="./p2.jpg" alt="Syed Darbar Basha">
+                </div>
+                <div class="candidate-details">
+                    <h3>Syed Darbar Basha</h3>
+                    <p class="ccie-tag">CCIE #62710</p>
+                    <p>CCIE EI</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            
+            <div class="footer-column">
+                <h3>Top Certification Courses</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNA Enterprise Certification Training</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNP ENARSI Certification Training</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNP ENCOR Certification Training</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Cisco SDWAN Certification Training</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Fortigate Firewall Certification Training</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Job Assurance Training</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Enterprise Combo Training Course</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Network Security Combo Training Course</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Multi-vendor training Course</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> MVIP Training Course</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Career</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Admission Form</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Connect with Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi NCR, India</p>
+                <p><i class="fab fa-whatsapp"></i> +91-962-534-3392</p>
+                <p><i class="fas fa-envelope"></i> admin@corenetworkingclasses.com</p>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 | Tech CNC | Core Networking Classes</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919625343392" class="whatsapp-sticky" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Networking Classes Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Base Resets & Typography --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: #333;
+            line-height: 1.7;
+            /* Added high-quality networking tech background image */
+            background: linear-gradient(rgba(245, 247, 250, 0.92), rgba(245, 247, 250, 0.92)), 
+                        url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2000') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Top Bar info --- */
+        .top-bar {
+            background-color: rgba(253, 253, 253, 0.95);
+            border-bottom: 1px solid #eaeaea;
+            padding: 8px 5%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #666;
+        }
+        .top-bar-left span {
+            margin-right: 15px;
+        }
+        .top-bar-left i {
+            color: #007bff;
+            margin-right: 5px;
+        }
+
+        /* --- Main Header Navigation --- */
+        .main-header {
+            background-color: #0d151c;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu ul li {
+            margin-left: 22px;
+        }
+
+        .nav-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu ul li a:hover, .nav-menu ul li a.active {
+            color: #3498db;
+        }
+
+        .header-socials a {
+            color: #fff;
+            margin-left: 15px;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .header-socials a:hover {
+            color: #3498db;
+        }
+
+        /* --- Main Page Grid Layout --- */
+        .page-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        /* --- Sidebar Quick Links --- */
+        .sidebar-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            background-color: #0b4b87;
+            color: #fff;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .sidebar-links li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .sidebar-links li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-links li a {
+            display: block;
+            padding: 12px 20px;
+            color: #334155;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s, padding-left 0.2s;
+            cursor: pointer;
+        }
+
+        .sidebar-links li a:hover, .sidebar-links li a.active {
+            background-color: #f4f8fb;
+            color: #0b4b87;
+            padding-left: 25px;
+        }
+
+        /* --- Inner Course Segments Menu --- */
+        .segments-wrapper {
+            padding: 10px 15px;
+            background: #fdfdfd;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .segment-nav-link {
+            font-size: 13px;
+            color: #555;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: block;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .segment-nav-link:hover, .segment-nav-link.active {
+            background: #0062cc;
+            color: #fff !important;
+        }
+
+        /* --- Content Area Tabs --- */
+        .content-container {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+
+        .tab-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 30px;
+            gap: 5px;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-bottom: none;
+            color: #495057;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: #0062cc;
+            color: #fff;
+            border-color: #0062cc;
+        }
+
+        /* --- Content Text Styling --- */
+        .main-content h1 {
+            font-size: 26px;
+            color: #222;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .main-content h2 {
+            font-size: 20px;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .main-content p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        /* --- Course Features Table --- */
+        .features-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        .features-table td {
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            font-size: 14px;
+        }
+
+        .features-table td i {
+            color: #0062cc;
+            margin-right: 8px;
+            width: 16px;
+        }
+
+        .features-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* --- Footer Styles --- */
+        .main-footer {
+            background-color: #0d151c;
+            color: #a5b1bc;
+            padding: 60px 0 20px 0;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 17px;
+            position: relative;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column ul li a {
+            color: #a5b1bc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-column ul li a i {
+            font-size: 11px;
+            margin-right: 8px;
+            color: #3498db;
+        }
+
+        .footer-column ul li a:hover {
+            color: #3498db;
+        }
+
+        .footer-column p {
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-column p i {
+            color: #3498db;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            background-color: #1a252f;
+            width: 35px;
+            height: 35px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #3498db;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1a252f;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #fff;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        @media (max-width: 992px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span><i class="fas fa-clock"></i> Mon to Sat: 10 Am - 10 Pm</span>
+            <span><i class="fas fa-phone-alt"></i> +91 962 534 3392</span>
+        </div>
+        <div>Growing Dreams.....</div>
+    </div>
+
+    <header class="main-header">
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="./home.html" class="active">Home</a></li>
+                <li><a href="./courses.html">Courses</a></li>
+                <li><a href="./rackrental.html">Rack Rental</a></li>
+                <li><a href="./blog.html">Blog</a></li>
+                <li><a href="./victory.html">Our Victory</a></li>
+                <li><a href="./certificate.html">E Certificate</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./login.html">App Login</a></li>
+            </ul>
+        </nav>
+        <div class="header-socials">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-layout">
+            
+            <aside class="sidebar-box">
+                <div class="sidebar-title">Tracks & Segments</div>
+                <ul class="sidebar-links">
+                    <li>
+                        <a onclick="toggleMenu('menu-enterprise')" class="active">R&S / Enterprise</a>
+                        <div id="menu-enterprise" class="segments-wrapper">
+                            <span class="segment-nav-link active" onclick="loadSegment('ccna_301')">CCNA 200-301</span>
+                            <span class="segment-nav-link" onclick="loadSegment('ccnp_ent')">CCNP Enterprise</span>
+                            <span class="segment-nav-link" onclick="loadSegment('ccie_ent')">CCIE Enterprise</span>
+                            <span class="segment-nav-link" onclick="loadSegment('cisco_sdwan')">Cisco SDWAN</span>
+                            <span class="segment-nav-link" onclick="loadSegment('jncia')">JNCIA</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a onclick="toggleMenu('menu-security')">Security</a>
+                        <div id="menu-security" class="segments-wrapper" style="display:none;">
+                            <span class="segment-nav-link" onclick="loadSegment('ccna_sec')">CCNA Security</span>
+                            <span class="segment-nav-link" onclick="loadSegment('ccnp_sec')">CCNP Security</span>
+                            <span class="segment-nav-link" onclick="loadSegment('palo_alto')">Palo-Alto</span>
+                            <span class="segment-nav-link" onclick="loadSegment('asa')">ASA</span>
+                            <span class="segment-nav-link" onclick="loadSegment('ethical_hack')">Ethical Hacking</span>
+                            <span class="segment-nav-link" onclick="loadSegment('security_plus')">Security+</span>
+                            <span class="segment-nav-link" onclick="loadSegment('cyber_sec')">Cyber Security</span>
+                            <span class="segment-nav-link" onclick="loadSegment('fortigate')">Fortigate</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a onclick="toggleMenu('menu-multivendor')">MultiVendor</a>
+                        <div id="menu-multivendor" class="segments-wrapper" style="display:none;">
+                            <span class="segment-nav-link" onclick="loadSegment('f5_ltm')">BIG-IP F5 LTM</span>
+                            <span class="segment-nav-link" onclick="loadSegment('f5_gtm')">BIG-IP F5 GTM</span>
+                            <span class="segment-nav-link" onclick="loadSegment('f5_asm')">BIG-IP F5 ASM</span>
+                            <span class="segment-nav-link" onclick="loadSegment('wireshark')">WireShark</span>
+                            <span class="segment-nav-link" onclick="loadSegment('mvip')">MVIP</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a onclick="toggleMenu('menu-webdev')">Web Development</a>
+                        <div id="menu-webdev" class="segments-wrapper" style="display:none;">
+                            <span class="segment-nav-link" onclick="loadSegment('html_css_js')">HTML / CSS / JS</span>
+                            <span class="segment-nav-link" onclick="loadSegment('php')">PHP</span>
+                            <span class="segment-nav-link" onclick="loadSegment('mysql')">MySQL</span>
+                            <span class="segment-nav-link" onclick="loadSegment('nodejs')">Node.js</span>
+                            <span class="segment-nav-link" onclick="loadSegment('mongodb')">MongoDB</span>
+                            <span class="segment-nav-link" onclick="loadSegment('pdo')">PDO</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a onclick="toggleMenu('menu-automation')">Automation</a>
+                        <div id="menu-automation" class="segments-wrapper" style="display:none;">
+                            <span class="segment-nav-link" onclick="loadSegment('devnet')">Devnet 200-901</span>
+                        </div>
+                    </li>
+                    <li>
+                        <a onclick="toggleMenu('menu-dc')">Data Center (DC)</a>
+                        <div id="menu-dc" class="segments-wrapper" style="display:none;">
+                            <span class="segment-nav-link" onclick="loadSegment('aci')">ACI 300-620</span>
+                        </div>
+                    </li>
+                </ul>
+            </aside>
+
+            <main class="content-container">
+                
+                <div class="tab-navigation">
+                    <button class="tab-btn active"><i class="fas fa-user-graduate"></i> Overview</button>
+                    <button class="tab-btn"><i class="fas fa-th"></i> Batch Details</button>
+                    <button class="tab-btn"><i class="fas fa-list-ul"></i> IT prerequisite</button>
+                    <button class="tab-btn"><i class="fas fa-book-open"></i> Journey With CNC</button>
+                    <button class="tab-btn"><i class="fas fa-question-circle"></i> Exam Length</button>
+                    <button class="tab-btn"><i class="fas fa-keyboard"></i> Course Outline</button>
+                </div>
+
+                <div class="main-content" id="segment-display-area">
+                    <h1 id="seg-header-title">CCNA 200-301 Certification Training: The Building Blocks for Strong Foundation in Networking</h1>
+                    <p id="seg-p1">The digital age requires seamless information flow, and competent network professionals power this networked world. Networks are complicated. A very few people know how to build, set up, and run them. So they are in high demand. The Cisco Certified Network Associate certification is a special one. It is a standard for networking skills around the world.</p>
+                    
+                    <h2 id="seg-sub-title">Networking Starter CCNA 200-301</h2>
+                    <p id="seg-p2">Networking beginners might start with the CCNA certification. The CCNA 200-301 certification teaches you to install, configure, operate, and troubleshoot: Build, install, manage, and troubleshoot medium-sized networks utilizing switching and routing technologies.</p>
+
+                    <h2 id="seg-career-title">Accessing Career Opportunities with CCNA Certification</h2>
+                    <p id="seg-p3">CCNA certification tells employers you know networking basics. This opens up several work choices in different sectors. This certification provides doors to network engineering, administration, and IT support. Due to its extensive recognition and industrial weight, the CCNA certification provides you an edge in the employment market.</p>
+
+                    <table class="features-table">
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-graduation-cap"></i> <strong>Training Type</strong></td>
+                                <td id="tbl-type">Online / Classroom</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-calendar-alt"></i> <strong>Course Duration</strong></td>
+                                <td id="tbl-duration">1.5 Months</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-clock"></i> <strong>No of Hours</strong></td>
+                                <td id="tbl-hours">2 Hours/Day</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-certificate"></i> <strong>Certificate</strong></td>
+                                <td id="tbl-cert">CCNA certification training</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-layer-group"></i> <strong>Skill Level</strong></td>
+                                <td id="tbl-level">Beginner</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-book"></i> <strong>Study Material</strong></td>
+                                <td>Yes (Complete Lab Manuals Included)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <h3>Top Certification Courses</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNA Enterprise Certification Training</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNP ENARSI Certification Training</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> CCNP ENCOR Certification Training</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Job Assurance Training</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Enterprise Combo Training Course</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Network Security Combo Training Course</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Career</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect with Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Delhi NCR, India</p>
+                <p><i class="fab fa-whatsapp"></i> +91-962-534-3392</p>
+                <p><i class="fas fa-envelope"></i> admin@corenetworkingclasses.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © 2026 | Tech CNC | Core Networking Classes</p>
+        </div>
+    </footer>
+
+    <a href="#" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        const courseDataMatrix = {
+            ccna_301: {
+                h1: "CCNA 200-301 Certification Training: Building Blocks for Strong Foundation",
+                p1: "The digital age requires seamless information flow, and competent network professionals power this networked world. Networks are complicated, and professionals who know how to deploy them are in high demand.",
+                h2: "Networking Starter CCNA 200-301",
+                p2: "The CCNA 200-301 certification teaches you to install, configure, operate, and troubleshoot medium-sized networks utilizing switching and routing technologies.",
+                h3: "Accessing Career Opportunities",
+                p3: "This certification provides doors to network engineering, administration, and IT support across modern enterprise networks globally.",
+                duration: "1.5 Months", hours: "2 Hours/Day", cert: "CCNA 200-301 Asset Profile", level: "Beginner"
+            },
+            ccnp_ent: {
+                h1: "CCNP Enterprise Certification Training: Implementing and Operating Core Network Technologies",
+                p1: "Scale up your network design structures. CCNP Enterprise confirms your capabilities across core enterprise solutions including advanced routing optimization and architecture scaling.",
+                h2: "Dual Core Exam Tracking Architecture",
+                p2: "Master both ENCOR 350-401 implementation protocols and specialized ENARSI infrastructure tracking matrices.",
+                h3: "Advanced Technical Leadership Options",
+                p3: "Prepares senior technicians for infrastructure administration, infrastructure management, and technical architectural deployment leadership roles.",
+                duration: "2 Months", hours: "2 Hours/Day", cert: "CCNP Enterprise Specialist Certification", level: "Professional"
+            },
+            ccie_ent: {
+                h1: "CCIE Enterprise Infrastructure: Expert-Level Training Solutions",
+                p1: "Achieve the highest standard gold tier designation inside structural system analytics globally. Validate end-to-end management control over complex infrastructure design arrays.",
+                h2: "Lab Environment Drills Matrix",
+                p2: "Comprehensive instruction targeting rigorous configuration topologies, automation scripts, and intense diagnostics management.",
+                h3: "Industry Authority & Recognition",
+                p3: "Position yourself as an elite network infrastructure authority capable of leading strategic enterprise engineering deployments.",
+                duration: "3 Months", hours: "3 Hours/Day", cert: "CCIE Infrastructure Master Validation", level: "Expert"
+            },
+            cisco_sdwan: {
+                h1: "Cisco SD-WAN Architecture Implementation Program",
+                p1: "Transition standard WAN operations to highly secure software-defined environments to optimize edge control capabilities over hybrid infrastructure pathways.",
+                h2: "Viptela & IOS XE Controllers Setup",
+                p2: "Deep dive configurations managing vManage orchestrators, vSmart controllers, and edge deployment configuration routines.",
+                h3: "Cloud Optimization Architectures",
+                p3: "Streamline traffic patterns across remote multi-office landscapes with highly responsive routing fabrics.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "Cisco SD-WAN Architecture Specialist", level: "Advanced"
+            },
+            jncia: {
+                h1: "JNCIA - Juniper Networks Certified Associate Junos Program",
+                p1: "Acquire intermediate routing system operational capability managing Junos OS running across contemporary multi-tier service node platforms.",
+                h2: "Core Junos Operations Engine",
+                p2: "Understand command structures, filtering configurations, operational maintenance pipelines, and device management basics.",
+                h3: "Multi-Vendor Capability Extension",
+                p3: "Broaden your engineering versatility by mastering Juniper operational frameworks alongside classic platform technologies.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "JNCIA Junos Associate Certification", level: "Beginner"
+            },
+            ccna_sec: {
+                h1: "CCNA Security: Protecting Enterprise Perimeter Environments",
+                p1: "Secure network infrastructure perimeters against emerging adversarial attack strategies by deploying integrated defense matrices.",
+                h2: "Threat Mitigation & AAA Management",
+                p2: "Configure secure access control, implement AAA logic, establish secure VPN structures, and protect switching infrastructures.",
+                h3: "Foundation for Cyber Security Roles",
+                p3: "Build a strong technical base required for specialized security engineering and infrastructure protection profiles.",
+                duration: "1.5 Months", hours: "2 Hours/Day", cert: "CCNA Security Training Validation", level: "Beginner"
+            },
+            ccnp_sec: {
+                h1: "CCNP Security Certification: Next-Gen Network Shielding Strategy",
+                p1: "Orchestrate enterprise threat management mechanisms across complex enterprise networks using integrated cloud and on-prem architectures.",
+                h2: "Core Security & VPN Frameworks",
+                p2: "Master SCOR 350-701 core solutions, advanced endpoint defenses, secure tunneling architectures, and structural protection rules.",
+                h3: "Enterprise Security Architecture Roles",
+                p3: "Qualify for high-level security architecture engineering, consulting, and defensive operations leadership roles.",
+                duration: "2 Months", hours: "2 Hours/Day", cert: "CCNP Security Specialist Credentials", level: "Professional"
+            },
+            palo_alto: {
+                h1: "Palo Alto Next-Generation Firewall Engineering Course",
+                p1: "Deploy industry-leading Next-Generation Firewalls (NGFW) to achieve granular application-level visibility and threat mitigation.",
+                h2: "App-ID, User-ID, and Content-ID Management",
+                p2: "Configure deep context analysis architectures to eliminate security blindspots across cloud and perimeter borders.",
+                h3: "Zero-Trust Engineering Strategy",
+                p3: "Implement proactive structural validation frameworks to guarantee optimal cloud edge processing security.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "Palo Alto Certified Network Security Engineer", level: "Advanced"
+            },
+            asa: {
+                h1: "Cisco ASA Firewall Core Operation & Deployment",
+                p1: "Configure legacy and modern Cisco Adaptive Security Appliances to protect enterprise data assets with strict stateful tracking configurations.",
+                h2: "Access Lists, NAT, & VPN Configurations",
+                p2: "Master security level parameters, high-availability context switching, and encrypted multi-site tunnel deployments.",
+                h3: "Infrastructure Layer Defense",
+                p3: "Ensure dependable protection for legacy and hybrid server center perimeters using stateful tracking logic.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "Cisco ASA Security Expert Profile", level: "Professional"
+            },
+            ethical_hack: {
+                h1: "Ethical Hacking: Advanced Penetration Testing Methodologies",
+                p1: "Think like an adversary to audit, discover, patch, and protect critical digital assets across modern corporate architectures.",
+                h2: "Reconnaissance, Exploitation, and Analysis",
+                p2: "Master vulnerability scanning procedures, memory exploits tracking, wireless vectors mapping, and evasion tactics.",
+                h3: "Defensive Vulnerability Assessment",
+                p3: "Provide critical proactive auditing capabilities to secure modern network assets against advanced threats.",
+                duration: "2 Months", hours: "2 Hours/Day", cert: "Certified Ethical Hacker Track", level: "Intermediate"
+            },
+            security_plus: {
+                h1: "CompTIA Security+ Baseline Certification Training",
+                p1: "Establish global baseline foundational skills validating primary security engineering practices across modern technical footprints.",
+                h2: "Risk Assessment & Threat Landscape Management",
+                p2: "Identify environmental vulnerability vectors, evaluate systems, and deploy compliant standard tracking defenses.",
+                h3: "Vendor-Neutral Security Foundation",
+                p3: "Build a highly versatile skill set recognized by enterprise IT security divisions around the world.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "CompTIA Security+ Core Validation", level: "Beginner"
+            },
+            cyber_sec: {
+                h1: "Cyber Security Defensive Operations & Incident Response",
+                p1: "Monitor digital environments, isolate threats, analyze malware, and orchestrate compliant incident mitigation strategies.",
+                h2: "SIEM Systems & Digital Forensics",
+                p2: "Analyze live log patterns, configure proactive monitoring systems, and identify source threat actors.",
+                h3: "Security Operations Center Roles",
+                p3: "Prepare for high-demand analytical roles in corporate Security Operations Centers (SOC).",
+                duration: "2 Months", hours: "2 Hours/Day", cert: "Cyber Security Defense Specialist", level: "Intermediate"
+            },
+            fortigate: {
+                h1: "Fortigate UTM Firewall Infrastructure Implementation",
+                p1: "Configure Fortinet security fabrics to deliver high-performance secure threat protection across distributed enterprise nodes.",
+                h2: "Security Profiles & SD-WAN Integration",
+                p2: "Deploy antivirus engines, web filtering rules, custom IPS matrices, and secure multi-provider configurations.",
+                h3: "Unified Threat Management Operations",
+                p3: "Optimize enterprise threat defense architectures with centralized management interfaces.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "Fortinet NSE Certified Professional", level: "Professional"
+            },
+            f5_ltm: {
+                h1: "BIG-IP F5 LTM: Local Traffic Manager Administration",
+                p1: "Optimize application delivery, resource distribution, and system availability using advanced Local Traffic Manager logic.",
+                h2: "Virtual Servers, Pools, and iRules",
+                p2: "Master session persistence parameters, intelligent health monitors, and highly customized script execution patterns.",
+                h3: "High-Availability Load Balancing",
+                p3: "Ensure continuous application availability for high-traffic enterprise application ecosystems.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "F5-LTM Certified Specialist", level: "Professional"
+            },
+            f5_gtm: {
+                h1: "BIG-IP F5 GTM: Global Traffic Manager Optimization",
+                p1: "Manage distributed application requests across multi-datacenter topologies with intelligent global DNS routing analytics.",
+                h2: "Wide IPs & Geographic DNS Logic",
+                p2: "Configure intelligent health check parameters across geographic zones to ensure disaster recovery resilience.",
+                h3: "Disaster Recovery Orchestration",
+                p3: "Design fault-tolerant application deployment structures across international hosting architectures.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "F5-GTM Specialist Qualification", level: "Professional"
+            },
+            f5_asm: {
+                h1: "BIG-IP F5 ASM: Web Application Firewall Security",
+                p1: "Defend layer-7 web applications against advanced exploit vectors, automated bots, and OWASP Top 10 vulnerabilities.",
+                h2: "Security Policies & Mitigation Logic",
+                p2: "Configure granular parsing profiles, parameter handling templates, and automated blocking behaviors.",
+                h3: "Layer-7 Application Shielding",
+                p3: "Protect sensitive transactional platforms from data layer injection and application bypass attempts.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "F5-ASM Web Application Specialist", level: "Advanced"
+            },
+            wireshark: {
+                h1: "WireShark Deep Packet Analysis & Diagnostics",
+                p1: "Perform advanced network troubleshooting by analyzing raw packet captures to diagnose complex systemic performance issues.",
+                h2: "Filter Syntax & Stream Reconstruction",
+                p2: "Isolate latency causes, track routing loops, identify security anomalies, and map protocol flows.",
+                h3: "Expert Network Troubleshooting",
+                p3: "Diagnose intermittent or hidden performance issues across complex multi-vendor network fabrics.",
+                duration: "0.5 Months", hours: "2 Hours/Day", cert: "WireShark Analytical Professional", level: "Intermediate"
+            },
+            mvip: {
+                h1: "MVIP: Multi-Vendor Integration Professional Program",
+                p1: "Master the integration of multi-vendor environments by configuring interconnected architectures featuring Cisco, Juniper, F5, and Palo Alto platforms.",
+                h2: "Cross-Platform Routing & Security Translation",
+                p2: "Resolve protocol differences, optimize cross-vendor security rules, and build unified management layers.",
+                h3: "Elite Enterprise Systems Engineer",
+                p3: "Prepare for senior positions managing high-scale corporate enterprise infrastructure topologies.",
+                duration: "3 Months", hours: "3 Hours/Day", cert: "MVIP Master Integration Credentials", level: "Expert"
+            },
+            html_css_js: {
+                h1: "HTML5 / CSS3 / JavaScript Modern Frontend Development",
+                p1: "Build ultra-responsive web interfaces utilizing semantic modern engineering architectures and robust asynchronous script design paradigms.",
+                h2: "DOM Manipulation & Event Processing",
+                p2: "Master CSS variables, responsive layout design, API communication architectures, and user state handling frameworks.",
+                h3: "Full Interface Creation Patterns",
+                p3: "Establish the complete core frontend layout skills required to build complex interactive digital web platforms.",
+                duration: "1.5 Months", hours: "2 Hours/Day", cert: "Frontend Engineering Specialist Certificate", level: "Beginner"
+            },
+            php: {
+                h1: "PHP Server-Side Dynamic Systems Programming",
+                p1: "Deploy secure backend logic systems capable of handling multi-user application operations and backend pipeline automation rules.",
+                h2: "Object-Oriented Backend Control Engine",
+                p2: "Master session management practices, custom class design models, and secure server-side data processing pipelines.",
+                h3: "Robust Enterprise Backend Design",
+                p3: "Build high-performance web applications backed by organized, logical, server-side data models.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "PHP Professional Developer Profile", level: "Intermediate"
+            },
+            mysql: {
+                h1: "MySQL Database Schema Architecture & Management",
+                p1: "Design high-performance relational database structures, manage data integrity constraints, and write optimized query routines.",
+                h2: "Indexing Strategies & Transaction Processing",
+                p2: "Build normalized database models, execute complex join routines, tune indexes, and secure storage mechanisms.",
+                h3: "Data Engineering Excellence",
+                p3: "Ensure rapid data retrieval and reliable database performance for enterprise information systems.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "MySQL Relational Systems Engineer", level: "Beginner"
+            },
+            nodejs: {
+                h1: "Node.js Event-Driven Scalable Runtime Deployments",
+                p1: "Build high-throughput, non-blocking asynchronous backend servers utilizing the Google V8 engine environment.",
+                h2: "REST APIs & Express Framework Control",
+                p2: "Master asynchronous design patterns, file streaming architectures, and middleware pipeline controls.",
+                h3: "Real-Time Application Services",
+                p3: "Create highly scalable network applications, web socket services, and efficient backend operations.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "Node.js Enterprise Developer Track", level: "Advanced"
+            },
+            mongodb: {
+                h1: "MongoDB Document-Oriented NoSQL Engineering",
+                p1: "Manage scalable, semi-structured document models designed to support cloud-scale modern web application layers.",
+                h2: "Aggregation Pipelines & Document Schemas",
+                p2: "Master unstructured indexing methods, sharding mechanics, and complex document aggregation workflows.",
+                h3: "High-Performance Content Storage",
+                p3: "Deploy modern storage solutions tailored to handle rapid development cycles and changing data requirements.",
+                duration: "1 Month", hours: "2 Hours/Day", cert: "NoSQL MongoDB Certified Architect", level: "Intermediate"
+            },
+            pdo: {
+                h1: "PDO (PHP Data Objects) Database Abstraction Layering",
+                p1: "Implement secure database connectivity abstractions to safeguard applications against data layer injection exploit vectors.",
+                h2: "Prepared Statements & Parameter Injection Safety",
+                p2: "Master reusable query execution routines, transaction rollbacks, and secure connection layer configurations.",
+                h3: "Enterprise Database Security",
+                p3: "Enforce strict security standards across application data abstraction interfaces.",
+                duration: "0.5 Months", hours: "2 Hours/Day", cert: "Secure Database Access Validation", level: "Advanced"
+            },
+            devnet: {
+                h1: "Devnet Associate 200-901: Cisco Automation Frameworks",
+                p1: "Bridge the gap between software development and network operations using Python scripts, REST APIs, and automated workflows.",
+                h2: "Network Programmability & Model-Driven Telemetry",
+                p2: "Automate device configurations using Ansible playbooks, parse JSON/XML structures, and interface with Cisco DNA Center APIs.",
+                h3: "NetDevOps Paradigm Strategy",
+                p3: "Transform manual infrastructure adjustments into repeatable, code-driven software workflows.",
+                duration: "1.5 Months", hours: "2 Hours/Day", cert: "Cisco DevNet Associate Qualification", level: "Intermediate"
+            },
+            aci: {
+                h1: "ACI 300-620: Implementing Cisco Application Centric Infrastructure",
+                p1: "Deploy fabric automation systems inside contemporary software-defined datacenter architectures.",
+                h2: "Tenant Policies, EPGs, and Contract Orchestration",
+                p2: "Master logical topology mapping, physical leaf-spine fabric controls, and virtualization layer mapping procedures.",
+                h3: "Cloud Data Center Engineering",
+                p3: "Design scalable, intent-based network data center environments for corporate hosting architectures.",
+                duration: "1.5 Months", hours: "2 Hours/Day", cert: "Cisco Certified ACI Specialist", level: "Advanced"
+            }
+        };
+
+        function toggleMenu(menuId) {
+            // Collapse all menus
+            const menus = document.querySelectorAll('.sidebar-links div');
+            menus.forEach(m => m.style.display = 'none');
+            
+            // Remove active style from all titles
+            const titles = document.querySelectorAll('.sidebar-links > li > a');
+            titles.forEach(t => t.classList.remove('active'));
+
+            // Open targeted menu list
+            const targetedMenu = document.getElementById(menuId);
+            targetedMenu.style.display = 'flex';
+            
+            // Set current clicked container link to active state
+            event.currentTarget.classList.add('active');
+
+            // Trigger the loading of the first inner item segment in that track group automatically
+            const firstSegment = targetedMenu.querySelector('.segment-nav-link');
+            if (firstSegment) {
+                firstSegment.click();
+            }
+        }
+
+        function loadSegment(segmentKey) {
+            // Manage local nav status styles cleanly
+            const subLinks = document.querySelectorAll('.segment-nav-link');
+            subLinks.forEach(link => link.classList.remove('active'));
+            
+            // Set specific targeted sub-item link to active status
+            event.currentTarget.classList.add('active');
+
+            const segment = courseDataMatrix[segmentKey];
+            if (!segment) return;
+
+            // Inject text metadata contents into target fields on overview template viewport page layer
+            document.getElementById('seg-header-title').innerText = segment.h1;
+            document.getElementById('seg-p1').innerText = segment.p1;
+            document.getElementById('seg-sub-title').innerText = segment.h2;
+            document.getElementById('seg-p2').innerText = segment.p2;
+            document.getElementById('seg-career-title').innerText = segment.h3;
+            document.getElementById('seg-p3').innerText = segment.p3;
+            
+            // Populate feature metadata metrics directly into workspace table structure
+            document.getElementById('tbl-duration').innerText = segment.duration;
+            document.getElementById('tbl-hours').innerText = segment.hours;
+            document.getElementById('tbl-cert').innerText = segment.cert;
+            document.getElementById('tbl-level').innerText = segment.level;
+            
+            // Set first tab to active state
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabButtons[0].classList.add('active');
+        }
+    </script>
+</body>
+</html>
